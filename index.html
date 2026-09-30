@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Price Finder - TechMart</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Figtree:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="wrap site-header__bar">
+      <span class="brand">TechMart</span>
+      <span class="site-header__note" id="catalogCount"></span>
+    </div>
+  </header>
+
+  <main class="wrap">
+
+    <section class="finder" aria-labelledby="pageTitle">
+      <div class="finder__top">
+        <h1 id="pageTitle">Price Finder</h1>
+
+        <fieldset class="modes">
+          <legend class="sr-only">Search type</legend>
+          <label class="mode">
+            <input type="radio" name="mode" value="closest" checked>
+            <span>Closest to a price</span>
+          </label>
+          <label class="mode">
+            <input type="radio" name="mode" value="range">
+            <span>Within a range</span>
+          </label>
+        </fieldset>
+      </div>
+
+      <form id="finderForm" novalidate>
+
+        <div class="sentence" id="closestFields">
+          <span>Find products around</span>
+          <label class="price-field">
+            <span class="sr-only">Target price in rupees</span>
+            <span class="price-field__symbol" aria-hidden="true">₹</span>
+            <input id="targetPrice" type="text" inputmode="numeric" autocomplete="off"
+                   value="70,000" aria-describedby="formError">
+          </label>
+        </div>
+
+        <!-- Mode 2: min and max price -->
+        <div class="sentence" id="rangeFields" hidden>
+          <span>Find products between</span>
+          <label class="price-field">
+            <span class="sr-only">Minimum price in rupees</span>
+            <span class="price-field__symbol" aria-hidden="true">₹</span>
+            <input id="minPrice" type="text" inputmode="numeric" autocomplete="off"
+                   value="50,000" aria-describedby="formError">
+          </label>
+          <span>and</span>
+          <label class="price-field">
+            <span class="sr-only">Maximum price in rupees</span>
+            <span class="price-field__symbol" aria-hidden="true">₹</span>
+            <input id="maxPrice" type="text" inputmode="numeric" autocomplete="off"
+                   value="80,000" aria-describedby="formError">
+          </label>
+        </div>
+
+        <p class="form-error" id="formError" role="alert"></p>
+
+        <div class="actions">
+          <label class="count" id="countField">
+            <span>Show</span>
+            <select id="resultCount">
+              <option value="3" selected>3</option>
+              <option value="5">5</option>
+              <option value="10">10</option>
+            </select>
+            <span>closest</span>
+          </label>
+          <button type="submit" class="btn btn--primary" id="submitBtn">Search</button>
+        </div>
+      </form>
+
+      <figure class="ruler" aria-hidden="true">
+        <div class="ruler__track" id="rulerTrack">
+          <div class="ruler__baseline"></div>
+        </div>
+        <div class="ruler__axis" id="rulerAxis"></div>
+        <figcaption>Each bar is one product. Spacing follows price on a log scale, so cheap items don't bunch together.</figcaption>
+      </figure>
+    </section>
+
+    <section class="results" aria-labelledby="resultsTitle">
+      <div class="results__head">
+        <h2 id="resultsTitle">Closest products</h2>
+        <p class="results__meta" id="resultsMeta" aria-live="polite"></p>
+      </div>
+      <p class="results__stats" id="resultsStats"></p>
+      <div id="resultsBody"></div>
+    </section>
+
+  </main>
+
+  <dialog id="productDialog" aria-labelledby="dialogTitle">
+    <div id="dialogBody"></div>
+  </dialog>
+
+  <script src="data.js"></script>
+  <script src="finder.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
